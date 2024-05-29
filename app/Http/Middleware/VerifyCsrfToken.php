@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        // TODO Вернуть CSRF-защиту (убрал для отладки).
+        'http://localhost*',
     ];
 }

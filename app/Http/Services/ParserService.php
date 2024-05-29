@@ -2,9 +2,6 @@
 
 namespace App\Http\Services;
 
-// use App\Models\News;
-// use App\Enums\News\Status;
-// use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class ParserService
@@ -21,10 +18,6 @@ class ParserService
         // "titles" => "Pet_door",
     ];
 
-    // public function __construct(string $searchString) {
-    //     $this->queryParams["titles"] = $searchString;
-    // }
-
     public function setSearchString(string $searchString)
     {
         $this->queryParams["titles"] = $searchString;
@@ -38,7 +31,6 @@ class ParserService
         dd($result);
     }
 }
-
 
 // Http::retry(3, 100)->withQueryParameters([
 //     'name' => 'Taylor',
