@@ -3,7 +3,11 @@
 namespace App\Http\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use App\Models\Article;
+use App\Models\Atom;
+use App\Models\IndexModel;
 
 class ParserService
 {
@@ -43,6 +47,49 @@ class ParserService
             ['content' => $content]
         );
 
-        return $article->wasRecentlyCreated ? $article : null;
+        // return $article->wasRecentlyCreated ? $article : null;
+        // return $article->id;
+
+        // TODO Возможно, нужна асинхронность
+        $atoms = $this->atomize($content);
+
+        if($article->wasRecentlyCreated) {
+            $this->saveAtomsAndIndex($atoms, $article->id);
+        }
+    }
+
+    public function atomize(string $text) {
+
+        $atoms = [];
+        $pattern = '/[a-zA-zа-яА-ЯёЁ0-9]+/u';
+
+        preg_match_all(
+            $pattern,
+            $text,
+            $atoms,
+        );
+
+        $atoms = $atoms[0];
+
+        $loweredAtoms = Arr::map($atoms, function (string $value, string $key) {
+            return Str::lower($value);
+        });
+
+        $atoms = array_count_values($loweredAtoms);
+
+        return $atoms;
+    }
+
+    public function saveAtomsAndIndex(array $atoms, int $articleId) {
+        foreach ($atoms as $word => $quantity) {
+            $atom = Atom::firstOrCreate(['word' => $word]);
+
+            $idx = new IndexModel();
+            $idx->atom_id = $atom->id;
+            $idx->article_id = $articleId;
+            $idx->quantity = $quantity;
+
+            $idx->save();
+        }
     }
 }
