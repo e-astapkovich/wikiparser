@@ -15,6 +15,7 @@ class ParserController extends Controller
         $searchString = $request->input('search');
         // $searchString = 'Челябинск';
 
-        $parser->setSearchString($searchString)->handle();
+        $result = $parser->setSearchString($searchString)->handle();
+        return $result;
     }
 }

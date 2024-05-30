@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 
+// TODO реализовать функционал поиска статей.
 class ParserService
 {
     private $endPoint = "https://en.wikipedia.org/w/api.php";
@@ -24,9 +25,3 @@ class ParserService
 
     }
 }
-
-
-// Http::retry(3, 100)->withQueryParameters([
-//     'name' => 'Taylor',
-//     'page' => 1,
-// ])->get('http://example.com/users')

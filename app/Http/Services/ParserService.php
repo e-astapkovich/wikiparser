@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use Illuminate\Support\Facades\Http;
+use App\Models\Article;
 
 class ParserService
 {
@@ -27,12 +28,21 @@ class ParserService
     //TODO удалять из текста "\t\t\t\n" (картинки в статье https://en.wikipedia.org/wiki/Door)
     public function handle() {
         $response = Http::withQueryParameters($this->queryParams)->get($this->endpoint);
-        $result = $response->json('query.pages.0.extract');
-        dd($result);
+
+        // TODO Добавить обработку ошибок
+        if ($response->ok()) {
+            $content = $response->json('query.pages.0.extract');
+        }
+
+        if (!$content) {
+            return false;
+        }
+
+        $article = Article::firstOrCreate(
+            ['title' => $this->queryParams['titles']],
+            ['content' => $content]
+        );
+
+        return $article->wasRecentlyCreated ? $article : null;
     }
 }
-
-// Http::retry(3, 100)->withQueryParameters([
-//     'name' => 'Taylor',
-//     'page' => 1,
-// ])->get('http://example.com/users')

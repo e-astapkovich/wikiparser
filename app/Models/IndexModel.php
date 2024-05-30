@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Article extends Model
+class IndexModel extends Model
 {
     use HasFactory;
 
+    protected $table = 'indexes';
+
     protected $fillable = [
-        'title',
-        'content',
+        'atom_id',
+        'article_id',
+        'quantity',
     ];
 
     public $timestamps = false;

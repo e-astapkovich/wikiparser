@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Atom extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'word',
+    ];
+
+    public $timestamps = false;
 }
