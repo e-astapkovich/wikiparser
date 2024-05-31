@@ -15,7 +15,7 @@ use App\Http\Controllers\ParserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::post('/search', ParserController::class);
