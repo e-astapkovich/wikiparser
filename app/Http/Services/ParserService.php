@@ -47,9 +47,6 @@ class ParserService
             ['content' => $content]
         );
 
-        // return $article->wasRecentlyCreated ? $article : null;
-        // return $article->id;
-
         if($article->wasRecentlyCreated) {
             $atoms = $this->atomize($content);
             $this->saveAtomsAndIndex($atoms, $article->id);

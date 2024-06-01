@@ -13,7 +13,7 @@ class Atom extends Model
 
     public $timestamps = false;
 
-    public function article(): BelongsToMany
+    public function articles(): BelongsToMany
     {
         return $this->belongsToMany(Article::class, 'indexes');
     }

@@ -31,13 +31,7 @@
                         <input type="text" name=title class="form-control w-75" placeholder="Ключевое слово">
                         <input type="submit" class="btn btn-secondary" value="Скопировать">
                     </form>
-                    <div id="importInfo" class="mb-4 p-3 border rounded">
-                        {{-- <p class="mt-0 mb-2"><span id="importStatus">Импорт завершен</span></p> --}}
-                        {{-- <p class="m-0"><span id="importUrl">Найдена статья по адресу: </span><span id="search-url"></span></p> --}}
-                        {{-- <p class="m-0"><span id="importTime">Время обработки: </span><span id="search-time">0,34</span></p> --}}
-                        {{-- <p class="m-0"><span id="importSize">Размер статьи: </span><span id="search-size">35</span></p> --}}
-                        {{-- <p class="m-0"><span id="importWords">Количество слов: </span><span id="search-words">1236</span></p> --}}
-                    </div>
+                    <div id="importInfo" class="mb-4 p-3 border rounded"></div>
                     <hr>
                     <table class="table table-hover">
                         <thead>
@@ -50,17 +44,15 @@
                             </tr>
                         </thead>
                         <tbody id="articlesTable">
-                            @forelse ($articles as $article)
+                            @foreach ($articles as $article)
                             <tr>
                                 <th scope="row">{{ $article->id }}</th>
                                 <td>{{ $article->title }}</td>
                                 <td><a href="https://ru.wikipedia.org/wiki/{{ $article->title }}" target="_blank">https://ru.wikipedia.org/wiki/{{ $article->title }}</a></td>
-                                <td>123</td>
-                                <td>1111</td>
+                                <td>.....</td>
+                                <td>.....</td>
                             </tr>
-                            @empty
-                                'пусто'
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
                     {{-- {{ $articles->links() }} --}}
@@ -69,41 +61,21 @@
             <div class="search-tab p-4 tab-pane fade" id="profile-tab-pane" role="tabpanel"
                 aria-labelledby="profile-tab" tabindex="0">
                 <div class="mb-2 search-tab__form">
-                    <form method="post" action="" id="search-form" enctype="multipart/form-data" class="d-flex gap-2 mb-3">
-                        <input type="text" class="form-control w-75" placeholder="Ключевое слово">
+                    <form id="searchForm"class="d-flex gap-2 mb-3">
+                        <input type="text" name="search" class="form-control w-75" placeholder="Ключевое слово">
                         <input type="submit" class="btn btn-secondary" value="Найти">
                     </form>
                 </div>
                 <hr>
                 <div class="search-tab__results d-flex justify-content-between">
                     <div class="search-tab__content flex-grow-1">
-                        <p class="search-tab__meta">Найдено: <span id="search-results-qty">10</span></p>
-                        <ul class="search-tab__list list-unstyled">
-                            <li class="search-tab__item">
-                                <span class="search-result-title">item-1 </span>
-                                (<span class="search-result-includes">11</span> вхождений)
-                            </li>
-                            <li class="search-tab__item">
-                                <span class="search-result-title">item-2 </span>
-                                (<span class="search-result-includes">12</span> вхождений)
-                            </li>
-                            <li class="search-tab__item">
-                                <span class="search-result-title">item-3 </span>
-                                (<span class="search-result-includes">100</span> вхождений)
-                            </li>
+                        <p class="search-tab__meta">Найдено: <span id="searchResultsQty"></span></p>
+                        <ul id="searchResults" class="search-tab__list list-unstyled">
                         </ul>
                     </div>
-                    <div class="search-tab__article w-50 p-3 border rounded">
-                        <h4>title</h4>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti aspernatur vel nobis
-                        perspiciatis
-                        quas, omnis laudantium aperiam error sint quidem ullam, aliquam corrupti fugiat quibusdam
-                        laborum
-                        sunt similique, enim facilis quo nam consequatur molestias? Suscipit vero aspernatur ipsam
-                        dolorem
-                        iusto deleniti, doloremque dolore reprehenderit fugit autem non, omnis, minus quisquam adipisci
-                        in
-                        voluptas?
+                    <div id="searchArticle" class="search-tab__article w-50 p-3 border rounded">
+                        <h4 id="searchArticleTitle"></h4>
+                        <div id="searchArticleContent"></div>
                     </div>
                 </div>
             </div>

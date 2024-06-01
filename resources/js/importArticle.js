@@ -15,6 +15,8 @@ importForm.onsubmit = async (event) => {
         body: new FormData(importForm)
     });
 
+    // TODO Добавить спиннер на время загрузки статьи.
+
     let result = await response.json();
 
     console.log(result);
@@ -36,8 +38,8 @@ importForm.onsubmit = async (event) => {
         <th scope="row">${ result.article.id }</th>
         <td>${ result.article.title }</td>
         <td><a href="https://ru.wikipedia.org/wiki/${ result.article.title }" target="_blank">https://ru.wikipedia.org/wiki/${ result.article.title }</a></td>
-        <td>123</td>
-        <td>1111</td>
+        <td>.....</td>
+        <td>.....</td>
         `
 
         articlesTable.append(article);

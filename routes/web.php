@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ParserController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\ParserController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +19,4 @@ use App\Http\Controllers\IndexController;
 Route::get('/', IndexController::class);
 
 Route::post('/import', ParserController::class)->name('importArticle');
+Route::post('/search', SearchController::class)->name('searchArticle');

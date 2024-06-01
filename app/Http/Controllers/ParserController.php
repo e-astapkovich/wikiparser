@@ -13,12 +13,9 @@ class ParserController extends Controller
 {
     public function __invoke(Request $request, ParserService $parser) {
 
-        $searchString = $request->input('title');
-        // $searchString = 'Челябинск';
+        $inputString = $request->input('title');
 
-        // TODO Добавить проверку - существет ли в БД статья с таким названием.
-
-        $result = $parser->setSearchString($searchString)->handle();
+        $result = $parser->setSearchString($inputString)->handle();
 
         return response()->json($result);
     }
