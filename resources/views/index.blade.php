@@ -50,7 +50,7 @@
                                 <td>{{ $article->title }}</td>
                                 <td><a href="https://ru.wikipedia.org/wiki/{{ $article->title }}" target="_blank">https://ru.wikipedia.org/wiki/{{ $article->title }}</a></td>
                                 <td>.....</td>
-                                <td>.....</td>
+                                <td>{{ $article->words_quantity }}</td>
                             </tr>
                             @endforeach
                         </tbody>
