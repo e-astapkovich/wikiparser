@@ -16,6 +16,6 @@ class Article extends Model
 
     public function atoms(): BelongsToMany
     {
-        return $this->belongsToMany(Atom::class, 'indexes');
+        return $this->belongsToMany(Atom::class, 'indexes')->withPivot('quantity');
     }
 }

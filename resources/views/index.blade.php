@@ -69,7 +69,7 @@
                 <hr>
                 <div class="search-tab__results d-flex justify-content-between">
                     <div class="search-tab__content flex-grow-1">
-                        <p class="search-tab__meta">Найдено: <span id="searchResultsQty"></span></p>
+                        <p class="search-tab__meta">Найдено совпадений: <span id="searchResultsQty"></span></p>
                         <ul id="searchResults" class="search-tab__list list-unstyled">
                         </ul>
                     </div>

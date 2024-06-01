@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Article;
 use App\Models\Atom;
 
@@ -11,15 +12,19 @@ class SearchController extends Controller
     public function __invoke(Request $request) {
         $searchString = $request->input('search');
 
-        $atom = Atom::where('word', $searchString)->first();
+        $articles = DB::table('indexes')
+            ->join('atoms', 'atoms.id', '=', 'indexes.atom_id')
+            ->join('articles', 'articles.id', '=', 'indexes.article_id')
+            ->where('atoms.word', $searchString)
+            ->select('articles.*', 'quantity')
+            ->orderByDesc('quantity')
+            ->get();
 
-        if (!$atom) {
+        if ($articles->isEmpty()) {
             return response()->json([
                 'status' => 'не найдено'
             ]);
         }
-
-        $articles = $atom->articles()->get();
 
         return response()->json($articles);
     }

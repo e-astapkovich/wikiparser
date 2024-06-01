@@ -25,7 +25,7 @@ searchForm.onsubmit = async (event) => {
             htmlString += `
         <li class="search-tab__item">
             <button class="search-result-title bg-transparent border border-0" data-id="${article.id}">${article.title}</button>
-            (<span class="search-result-includes">.....</span> вхождений)
+            (количество вхождений: <span class="search-result-includes">${article.quantity}</span>)
         </li>
         `;
         });
