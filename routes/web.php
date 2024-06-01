@@ -17,4 +17,4 @@ use App\Http\Controllers\IndexController;
 
 Route::get('/', IndexController::class);
 
-Route::post('/search', ParserController::class);
+Route::post('/import', ParserController::class)->name('importArticle');

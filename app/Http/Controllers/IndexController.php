@@ -10,6 +10,7 @@ class IndexController extends Controller
     public function __invoke(Request $request) {
 
         $articles = Article::paginate(10);
+        $articles = Article::all();
         return view('index')
                 ->with('articles', $articles);
     }

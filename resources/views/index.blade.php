@@ -26,17 +26,17 @@
             <div class="import-tab p-4 tab-pane fade show active" id="home-tab-pane" role="tabpanel"
                 aria-labelledby="home-tab" tabindex="0">
                 <div class="mb-2">
-                    <form method="post" action="" id="import-form" enctype="multipart/form-data" class="d-flex gap-2 mb-3">
+                    <form id="importForm" class="d-flex gap-2 mb-3">
                         @csrf
-                        <input type="text" name=search class="form-control w-75" placeholder="Ключевое слово">
+                        <input type="text" name=title class="form-control w-75" placeholder="Ключевое слово">
                         <input type="submit" class="btn btn-secondary" value="Скопировать">
                     </form>
-                    <div class="mb-4 p-3 border rounded">
-                        <p class="mt-0 mb-2"><span>Импорт завершен</span></p>
-                        <p class="m-0"><span>Найдена статья по адресу: </span><span id="search-url"></span></p>
-                        <p class="m-0"><span>Время обработки: </span><span id="search-time">0,34</span></p>
-                        <p class="m-0"><span>Размер статьи: </span><span id="search-size">35</span></p>
-                        <p class="m-0"><span>Количество слов: </span><span id="search-words">1236</span></p>
+                    <div id="importInfo" class="mb-4 p-3 border rounded">
+                        {{-- <p class="mt-0 mb-2"><span id="importStatus">Импорт завершен</span></p> --}}
+                        {{-- <p class="m-0"><span id="importUrl">Найдена статья по адресу: </span><span id="search-url"></span></p> --}}
+                        {{-- <p class="m-0"><span id="importTime">Время обработки: </span><span id="search-time">0,34</span></p> --}}
+                        {{-- <p class="m-0"><span id="importSize">Размер статьи: </span><span id="search-size">35</span></p> --}}
+                        {{-- <p class="m-0"><span id="importWords">Количество слов: </span><span id="search-words">1236</span></p> --}}
                     </div>
                     <hr>
                     <table class="table table-hover">
@@ -49,7 +49,7 @@
                                 <th scope="col">Количество слов</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="articlesTable">
                             @forelse ($articles as $article)
                             <tr>
                                 <th scope="row">{{ $article->id }}</th>
@@ -63,7 +63,7 @@
                             @endforelse
                         </tbody>
                     </table>
-                    {{ $articles->links() }}
+                    {{-- {{ $articles->links() }} --}}
                 </div>
             </div>
             <div class="search-tab p-4 tab-pane fade" id="profile-tab-pane" role="tabpanel"

@@ -39,7 +39,7 @@ class ParserService
         }
 
         if (!$content) {
-            return false;
+            return ['status' => 'Статья с таким названием не найдена в Википедии'];
         }
 
         $article = Article::firstOrCreate(
@@ -50,12 +50,15 @@ class ParserService
         // return $article->wasRecentlyCreated ? $article : null;
         // return $article->id;
 
-        // TODO Возможно, нужна асинхронность
-        $atoms = $this->atomize($content);
-
         if($article->wasRecentlyCreated) {
+            $atoms = $this->atomize($content);
             $this->saveAtomsAndIndex($atoms, $article->id);
         }
+
+        return [
+            'status' => $article->wasRecentlyCreated? 'Импорт завершен' : 'Статья уже была импортирована ранее',
+            'article' => $article
+        ];
     }
 
     public function atomize(string $text) {
