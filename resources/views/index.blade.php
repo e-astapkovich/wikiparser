@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    {{-- TODO Добавить какой нибудь хэдер --}}
     <div class="header mb-3">
     </div>
     <div class="container">
@@ -25,8 +26,9 @@
             <div class="import-tab p-4 tab-pane fade show active" id="home-tab-pane" role="tabpanel"
                 aria-labelledby="home-tab" tabindex="0">
                 <div class="mb-2">
-                    <form class="d-flex gap-2 mb-3">
-                        <input type="text" class="form-control w-75" placeholder="Ключевое слово">
+                    <form method="post" action="" id="import-form" enctype="multipart/form-data" class="d-flex gap-2 mb-3">
+                        @csrf
+                        <input type="text" name=search class="form-control w-75" placeholder="Ключевое слово">
                         <input type="submit" class="btn btn-secondary" value="Скопировать">
                     </form>
                     <div class="mb-4 p-3 border rounded">
@@ -48,28 +50,26 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse ($articles as $article)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Title-1</td>
-                                <td>http:\\example.com\1</td>
+                                <th scope="row">{{ $article->id }}</th>
+                                <td>{{ $article->title }}</td>
+                                <td><a href="https://ru.wikipedia.org/wiki/{{ $article->title }}" target="_blank">https://ru.wikipedia.org/wiki/{{ $article->title }}</a></td>
                                 <td>123</td>
                                 <td>1111</td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Title-2</td>
-                                <td>http:\\example.com\1</td>
-                                <td>234</td>
-                                <td>2222</td>
-                            </tr>
+                            @empty
+                                'пусто'
+                            @endforelse
                         </tbody>
                     </table>
+                    {{ $articles->links() }}
                 </div>
             </div>
             <div class="search-tab p-4 tab-pane fade" id="profile-tab-pane" role="tabpanel"
                 aria-labelledby="profile-tab" tabindex="0">
                 <div class="mb-2 search-tab__form">
-                    <form class="d-flex gap-2 mb-3">
+                    <form method="post" action="" id="search-form" enctype="multipart/form-data" class="d-flex gap-2 mb-3">
                         <input type="text" class="form-control w-75" placeholder="Ключевое слово">
                         <input type="submit" class="btn btn-secondary" value="Найти">
                     </form>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ParserController;
+use App\Http\Controllers\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +15,6 @@ use App\Http\Controllers\ParserController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', IndexController::class);
 
 Route::post('/search', ParserController::class);
