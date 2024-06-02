@@ -9,9 +9,22 @@ use App\Models\Article;
 use App\Models\Atom;
 use App\Models\IndexModel;
 
+/**
+ * Обработчик поискового запроса
+ * @param Request $request
+ */
 class ParserService
 {
+    /**
+	 * URL для API запросов
+	 * @var string
+	 */
     private $endpoint = 'https://ru.wikipedia.org/w/api.php';
+
+    /**
+	 * Массив параметров для исходящего http-запроса на Wiki API
+	 * @var array
+	 */
     private $queryParams =
     [
         "action" => "query",
@@ -23,14 +36,23 @@ class ParserService
         // "titles" => "Pet_door",
     ];
 
+    /**
+     * Добавляет ключевое слово для поиска в массив параметров исходящего http-запроса
+     * @param string $searchString
+     * @return $this
+     */
     public function setSearchString(string $searchString)
     {
         $this->queryParams["titles"] = $searchString;
         return $this;
     }
 
-    //TODO удалять из текста "\t\t\t\n" (картинки в статье https://en.wikipedia.org/wiki/Door)
+    /**
+     * Осуществляет парсинг статьи: отправка запроса, сохранение результата в БД, вызов функции, делящей статью на слова-атомы
+     * @return array
+     */
     public function handle() {
+        //TODO удалять из текста "\t\t\t\n" (картинки в статье https://en.wikipedia.org/wiki/Door)
         $response = Http::withQueryParameters($this->queryParams)->get($this->endpoint);
 
         // TODO Добавить обработку ошибок
@@ -58,6 +80,11 @@ class ParserService
         ];
     }
 
+    /**
+     * Делит текст на слова-атомы
+     * @param string $text
+     * @return array
+     */
     public function atomize(string $text) {
 
         $atoms = [];
@@ -80,6 +107,12 @@ class ParserService
         return $atoms;
     }
 
+    /**
+     * Сохраняет в БД слова-атомы и индекс
+     * @param array $atoms
+     * @param int $articleId
+     * @return void
+     */
     public function saveAtomsAndIndex(array $atoms, int $articleId) {
         foreach ($atoms as $word => $quantity) {
             $atom = Atom::firstOrCreate(['word' => $word]);

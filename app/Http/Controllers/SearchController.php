@@ -9,7 +9,12 @@ use App\Models\Atom;
 
 class SearchController extends Controller
 {
+    /**
+     * Обработчик поискового запроса
+     * @param Request $request
+     */
     public function __invoke(Request $request) {
+
         $searchString = $request->input('search');
 
         $articles = DB::table('indexes')

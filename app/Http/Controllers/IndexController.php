@@ -8,6 +8,10 @@ use App\Models\Article;
 
 class IndexController extends Controller
 {
+    /**
+     * Метод, возвращающий html-страницу сервиса
+     * Извлекает из БД статьи, с дополнительной колонкой с количеством слов в статье
+     */
     public function __invoke() {
 
         // $articles = Article::all();

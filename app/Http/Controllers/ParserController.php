@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Http;
 
 class ParserController extends Controller
 {
+    /**
+     * Обработчик апроса на извлечение статьи
+     * @param Request $request
+     * @param ParserService $parser
+     */
     public function __invoke(Request $request, ParserService $parser) {
 
         $inputString = $request->input('title');
