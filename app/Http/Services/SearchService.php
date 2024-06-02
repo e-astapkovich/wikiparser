@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 /**
  * Сервис поиска статей в википедии по заданному слову
  */
-class ParserService
+class SearchService
 {
     private $endPoint = "https://en.wikipedia.org/w/api.php";
 
