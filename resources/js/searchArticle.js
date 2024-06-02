@@ -13,7 +13,6 @@ searchForm.onsubmit = async (event) => {
     });
 
     let result = await response.json();
-    console.log(result);
 
     if (result.status == 'не найдено') {
         searchResults.innerHTML = '';

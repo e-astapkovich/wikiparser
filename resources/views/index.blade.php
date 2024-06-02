@@ -62,6 +62,7 @@
                 aria-labelledby="profile-tab" tabindex="0">
                 <div class="mb-2 search-tab__form">
                     <form id="searchForm"class="d-flex gap-2 mb-3">
+                        @csrf
                         <input type="text" name="search" class="form-control w-75" placeholder="Ключевое слово">
                         <input type="submit" class="btn btn-secondary" value="Найти">
                     </form>
