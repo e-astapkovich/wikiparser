@@ -17,7 +17,7 @@ class IndexController extends Controller
         // $articles = Article::all();
 
         $articles = DB::table('articles')
-            ->join('indexes', 'indexes.article_id', '=', 'articles.id')
+            ->leftJoin('indexes', 'indexes.article_id', '=', 'articles.id')
             ->select(DB::raw('articles.*, sum(quantity) as words_quantity'))
             ->groupBy('articles.title')
             ->get();
