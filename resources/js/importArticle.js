@@ -28,9 +28,9 @@ importForm.onsubmit = async (event) => {
     if (result.status == 'Импорт завершен') {
         htmlString += `
         <p class="m-0"><span id="importUrl">Найдена статья по адресу: </span><span id="search-url">https://ru.wikipedia.org/wiki/${result.article.title}</span></p>
-        <p class="m-0"><span id="importTime">Время обработки: </span><span id="search-time">.....</span></p>
-        <p class="m-0"><span id="importSize">Размер статьи: </span><span id="search-size">.....</span></p>
-        <p class="m-0"><span id="importWords">Количество слов: </span><span id="search-words">.....</span></p>
+        <p class="m-0"><span id="importTime">Время обработки: </span><span id="search-time">${result.executionTime} сек.</span></p>
+        <p class="m-0"><span id="importSize">Размер статьи: </span><span id="search-size">${result.articleSize}</span> Kb</p>
+        <p class="m-0"><span id="importWords">Количество слов: </span><span id="search-words">${result.atomsCount}</span></p>
         `;
 
         let article = document.createElement('tr');
@@ -38,8 +38,8 @@ importForm.onsubmit = async (event) => {
         <th scope="row">${ result.article.id }</th>
         <td>${ result.article.title }</td>
         <td><a href="https://ru.wikipedia.org/wiki/${ result.article.title }" target="_blank">https://ru.wikipedia.org/wiki/${ result.article.title }</a></td>
-        <td>.....</td>
-        <td>.....</td>
+        <td>${result.articleSize} Kb</td>
+        <td>${result.atomsCount}</td>
         `
 
         articlesTable.append(article);

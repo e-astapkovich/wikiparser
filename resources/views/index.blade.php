@@ -49,7 +49,7 @@
                                 <th scope="row">{{ $article->id }}</th>
                                 <td>{{ $article->title }}</td>
                                 <td><a href="https://ru.wikipedia.org/wiki/{{ $article->title }}" target="_blank">https://ru.wikipedia.org/wiki/{{ $article->title }}</a></td>
-                                <td>.....</td>
+                                <td>{{ round(strlen($article->content)/1024, 2) }} Kb</td>
                                 <td>{{ $article->words_quantity }}</td>
                             </tr>
                             @endforeach

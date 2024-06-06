@@ -41,8 +41,7 @@ class ParserService
      * @param string $searchString
      * @return $this
      */
-    public function setSearchString(string $searchString)
-    {
+    public function setSearchString(string $searchString) {
         $this->queryParams["titles"] = $searchString;
         return $this;
     }
@@ -52,6 +51,10 @@ class ParserService
      * @return array
      */
     public function handle() {
+        $result = [];
+
+        $startTime = microtime(true);
+
         //TODO удалять из текста "\t\t\t\n" (картинки в статье https://en.wikipedia.org/wiki/Door)
         $response = Http::withQueryParameters($this->queryParams)->get($this->endpoint);
 
@@ -71,13 +74,24 @@ class ParserService
 
         if($article->wasRecentlyCreated) {
             $atoms = $this->atomize($content);
-            $this->saveAtomsAndIndex($atoms, $article->id);
+            $result['atomsCount']  = count($atoms);
+            // $this->saveAtomsAndIndex($atoms, $article->id);
         }
 
-        return [
-            'status' => $article->wasRecentlyCreated? 'Импорт завершен' : 'Статья уже была импортирована ранее',
-            'article' => $article
-        ];
+        $finishTime = microtime(true);
+        $executionTime = round($finishTime - $startTime, 2);
+
+        $result = array_merge(
+            $result,
+            [
+                'status' => $article->wasRecentlyCreated? 'Импорт завершен' : 'Статья уже была импортирована ранее',
+                'article' => $article,
+                'articleSize' => round(strlen($article->content)/1024, 2),
+                'executionTime' => $executionTime
+            ]
+        );
+
+        return $result;
     }
 
     /**
