@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use App\Models\Article;
 use App\Models\Atom;
 use App\Models\IndexModel;
+use App\Jobs\SaveAtomsAndIndex;
 
 /**
  * Обработчик поискового запроса
@@ -76,6 +77,7 @@ class ParserService
             $atoms = $this->atomize($content);
             $result['atomsCount']  = count($atoms);
             // $this->saveAtomsAndIndex($atoms, $article->id);
+            SaveAtomsAndIndex::dispatch($atoms, $article->id);
         }
 
         $finishTime = microtime(true);
@@ -119,24 +121,5 @@ class ParserService
         $atoms = array_count_values($loweredAtoms);
 
         return $atoms;
-    }
-
-    /**
-     * Сохраняет в БД слова-атомы и индекс
-     * @param array $atoms
-     * @param int $articleId
-     * @return void
-     */
-    public function saveAtomsAndIndex(array $atoms, int $articleId) {
-        foreach ($atoms as $word => $quantity) {
-            $atom = Atom::firstOrCreate(['word' => $word]);
-
-            $idx = new IndexModel();
-            $idx->atom_id = $atom->id;
-            $idx->article_id = $articleId;
-            $idx->quantity = $quantity;
-
-            $idx->save();
-        }
     }
 }
